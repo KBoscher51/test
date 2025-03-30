@@ -20,137 +20,80 @@ Initialized empty Git repository in /chemin/vers/projet-git/.git/
 ## Partie 2 : Les bases
 
 ```bash
-echo "# Mon Projet Git\nCe projet est réalisé dans le cadre du TP Git." > README.md
+echo "Mon tp2 git" > README.md
 
 git add README.md
 
-git commit -m "Premier commit : ajout du README"
-```
-
-```
-[main (root-commit) f7d2e3a] Premier commit : ajout du README
- 1 file changed, 2 insertions(+)
- create mode 100644 README.md
+git commit -m "ajout du README"
 ```
 
 ```bash
-echo "\nAjout d'une nouvelle ligne pour tester les modifications." >> README.md
+echo "edit" >> README.md
 git status
-```
-
-```
-On branch main
-Changes not staged for commit:
-  (use "git add <file>..." to update what will be committed)
-  (use "git restore <file>..." to discard changes in working directory)
-        modified:   README.md
-
-no changes added to commit (use "git add" and/or "git commit -a")
 ```
 
 ```bash
 git log
 ```
 
-```
-commit f7d2e3a1234567890abcdef1234567890abcdef (HEAD -> main)
-Author: Killian Boscher <killian.boscher@example.com>
-Date:   Sun Mar 30 10:00:00 2025 +0200
-
-    Premier commit : ajout du README
-```
-
 ## Partie 3 : Travailler avec les branches
 
 ```bash
-git branch feature-description
-
-git checkout feature-description
-echo "\n## Description\nCe projet permet d'explorer les commandes Git." >> README.md
+git checkout -b releases
+echo "##Branches :\n ###realses" >> README.md
 git add README.md
-git commit -m "Ajout d'une section description dans le README"
-```
-
-```
-[feature-description 3c4d5e6] Ajout d'une section description dans le README
- 1 file changed, 2 insertions(+)
+git commit -m "ajout section description branch dans le README"
+git push -u origin releases
 ```
 
 ```bash
 git checkout main
-git merge feature-description
-```
-
-```
-Updating f7d2e3a..3c4d5e6
-Fast-forward
- README.md | 2 ++
- 1 file changed, 2 insertions(+)
+git merge releases
 ```
 
 ```bash
-git branch -d feature-description
-```
-
-```
-Deleted branch feature-description (was 3c4d5e6).
+git branch -d releases
 ```
 
 ## Partie 4 : Gérer les conflits
 
 ```bash
-git checkout -b section-installation
-echo "\n## Installation\nClonez ce dépôt et lancez l'application." >> README.md
+git checkout -b releasesone
+echo "###releasesone" >> README.md
 git add README.md
-git commit -m "Ajout de la section installation"
+git commit -m "nouvelle branch releasestwo + edit Readme"
+git push -u origin releasesone
 
 git checkout main
 
-git checkout -b section-config
-echo "\n## Installation\nTéléchargez le ZIP et suivez les étapes du guide." >> README.md
+git checkout -b releasestwo
+echo "GROS SOUCIS" >> README.md
 git add README.md
-git commit -m "Ajout d'une autre version de la section installation"
+git commit -m "Création d'un problème"
+git push -u origin releasestwo
 ```
 
 ```bash
 git checkout main
-git merge section-installation
-git merge section-config
-```
-
-```
-Auto-merging README.md
-CONFLICT (content): Merge conflict in README.md
-Automatic merge failed; fix conflicts and then commit the result.
+git merge releasesone
+git merge releasestwo
 ```
 
 ```bash
 git add README.md
-git commit -m "Résolution du conflit dans la section installation"
-```
-
-```
-[main 7g8h9i0] Résolution du conflit dans la section installation
+git commit -m "Résolution du conflit"
 ```
 
 ## Partie 5 : Commandes avancées
 
 ```bash
-echo "\n## Fonctionnalités\n- Gestion des utilisateurs\n- Configuration avancée" >> README.md
+echo "..." >> README.md
 
-git stash save "Ajout de la section fonctionnalités"
-```
-
-```
-Saved working directory and index state On main: Ajout de la section fonctionnalités
+git stash save "Editing readme"
 ```
 
 ```bash
 git stash list
-```
-
-```
-stash@{0}: On main: Ajout de la section fonctionnalités
 ```
 
 ```bash
@@ -159,21 +102,17 @@ git stash apply stash@{0}
 
 ```bash
 git checkout -b feature-rebase
-echo "\n## Contribution\nLes contributions sont les bienvenues." >> README.md
+echo "blabla" >> README.md
 git add README.md
 git commit -m "Ajout de la section contribution"
 
 git checkout main
-echo "\n## Licence\nMIT" >> README.md
+echo "titi toto" >> README.md
 git add README.md
-git commit -m "Ajout de la section licence"
+git commit -m "editing readme"
 
 git checkout feature-rebase
 git rebase main
-```
-
-```
-Successfully rebased and updated refs/heads/feature-rebase.
 ```
 
 ```bash
@@ -185,20 +124,9 @@ git commit -m "Ajout d'un fichier app.js"
 git log -1 --oneline
 ```
 
-```
-1a2b3c4 Ajout d'un fichier app.js
-```
-
 ```bash
 git checkout main
 git cherry-pick 1a2b3c4
-```
-
-```
-[main 5d6e7f8] Ajout d'un fichier app.js
- Date: Sun Mar 30 11:30:00 2025 +0200
- 1 file changed, 1 insertion(+)
- create mode 100644 app.js
 ```
 
 ```bash
@@ -214,7 +142,7 @@ git reset --hard HEAD~1
 ## Partie 6 : Collaborer avec GitLab
 
 ```bash
-git clone https://gitlab.com/username/projet.git
+git clone https://gitlab.com/KBoscher/projetgit.git
 cd projet
 
 git push origin main
